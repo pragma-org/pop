@@ -49,7 +49,7 @@ The following diagram illustrates a simple flow of PoP transactions:
 * When v2 is released, a new transaction is published which consumes the initial version, references _B_  at version v2, and updates the data for version v2 of _A_. Note the transaction is signed by a subset of the initial signatories
 * All UTxO representing current versions are held by the same script denoted `PoP`
 
-```graphviz
+```mermaid
 digraph G {
     node [fontname="Helvetica,Arial,sans-serif"]
     edge [fontname="Helvetica,Arial,sans-serif"]
@@ -105,13 +105,20 @@ The PoP script enforces the following rules when part of a transaction $T$:
     * In case of a _minor_ or _patch_ change, there _must_ be a single output,
     * In case of a _major_ change, there _may_ be two outputs, where one of the outputs is _unchanged_.
 
-:::info
-The rationale behind the rules for handling versions is the following:
-* Let's say there's a component `A` at version `1.0` that depends on `B` at version `1.0`, which means there's been a transaction producing `A`'s UTxO referencing `B@1.0`'s UTxO
-* If `B` is upgraded at version `1.1` this means the UTxO `B@1.0` is no longer available for referencing, but of course `A@1.0` is not affected
-* However, if `A` is upgraded to `1.1` then it _must_ also upgrade its dependency on `B` to `1.1` because there's no more `B@1.0` to reference
-* This is a way to "force" dependents to upgrade to newer minor versions which might be a good idea in general, for example to ensure security patches are applied
-:::
+> [!NOTE]
+> The rationale behind the rules for handling versions is the following:
+> * Let's say there's a component `A` at version `1.0` that depends on
+>   `B` at version `1.0`, which means there's been a transaction
+>   producing `A`'s UTxO referencing `B@1.0`'s UTxO
+> * If `B` is upgraded at version `1.1` this means the UTxO `B@1.0` is
+>   no longer available for referencing, but of course `A@1.0` is not
+>   affected
+> * However, if `A` is upgraded to `1.1` then it _must_ also upgrade its
+>   dependency on `B` to `1.1` because there's no more `B@1.0` to
+>   reference
+> * This is a way to "force" dependents to upgrade to newer minor
+>   versions which might be a good idea in general, for example to
+>   ensure security patches are applied
 
 ### Off-chain data & verifications
 
