@@ -49,31 +49,7 @@ The following diagram illustrates a simple flow of PoP transactions:
 * When v2 is released, a new transaction is published which consumes the initial version, references _B_  at version v2, and updates the data for version v2 of _A_. Note the transaction is signed by a subset of the initial signatories
 * All UTxO representing current versions are held by the same script denoted `PoP`
 
-```mermaid
-digraph G {
-    node [fontname="Helvetica,Arial,sans-serif"]
-    edge [fontname="Helvetica,Arial,sans-serif"]
-    graph [rankdir = "LR"];
-
-    // v1 component a
-    "utxo1" [ label = "some-address | 10 ₳ | " , shape = "record" ];
-    "initial-tx-a" [ label = "a-v1 | σ(A, B, C)" , shape = "Mrecord" ];
-    "a-v1" [ label = "PoP | 1 ₳ + 1 pop.a | data(a, v1) ", shape = "record" ];
-
-    "utxo1" -> "initial-tx-a";
-    "initial-tx-a" -> "a-v1";
-
-    // v2 component b
-    "b-v2" [ label = " PoP | 1 ₳ + 1 pop.b | data(b, v2) ", shape = "record" ];
-
-    "new-version-tx-a" [ label = "a-v2 | σ(B, C)" , shape = "Mrecord" ];
-    "a-v2" [ label = "PoP  | 1 ₳ + 1 pop.a | data(a, v2) ", shape = "record" ];
-
-    "a-v1" -> "new-version-tx-a";
-    "b-v2" -> "new-version-tx-a" [ color = "lightgray" ];
-    "new-version-tx-a" -> "a-v2";
-}
-```
+![Transactions flow](./transactions.svg)
 
 ### PoP Script
 
